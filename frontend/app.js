@@ -20,7 +20,7 @@ function renderClaim(claim) {
     <td>${claim.member_name}</td>
     <td>${claim.facility}</td>
     <td>${claim.amount}</td>
-    <td>${claim.status}</td>
+    <td><span class="badge badge-${claim.status}">${claim.status}</span></td>
     <td></td>
   `;
 
