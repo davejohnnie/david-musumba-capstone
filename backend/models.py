@@ -5,8 +5,8 @@ class Claim(Base):
     __tablename__ = "claims"
 
     id = Column(Integer, primary_key=True, index=True)
-    member_name = Column(String, nullable=False)
-    facility = Column(String, nullable=False)
+    member_name = Column(String(255), nullable=False)
+    facility = Column(String(255), nullable=False)
     amount = Column(Float, nullable=False)
-    status = Column(String, default="pending")
+    status = Column(String(50), default="pending")
     date_submitted = Column(Date)
