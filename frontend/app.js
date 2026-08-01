@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000";
+const API_URL = "/api";
 
 const form = document.getElementById("claim-form");
 const memberInput = document.getElementById("member-name");
