@@ -1,3 +1,42 @@
 body {
   font-family: 'Segoe UI', system-ui, sans-serif;
+  background-color: #f4f6f8;
+}
+
+h1 {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.subtitle {
+  color: #6c757d;
+  margin-bottom: 2rem;
+}
+
+#claim-form {
+  margin-bottom: 2rem;
+}
+
+.table {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table th, .table td {
+  padding: 0.9rem 1rem;
+  vertical-align: middle;
+}
+
+.badge-pending {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.badge-approved {
+  background-color: #198754;
+}
+
+.badge-rejected {
+  background-color: #dc3545;
 }
