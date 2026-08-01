@@ -41,3 +41,40 @@ jobs:
           docker build -t $ECR_REGISTRY/david-musumba/frontend:latest -t $ECR_REGISTRY/david-musumba/frontend:${{ github.sha }} .
           docker push $ECR_REGISTRY/david-musumba/frontend:latest
           docker push $ECR_REGISTRY/david-musumba/frontend:${{ github.sha }}
+
+  deploy-to-eks:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Update kubeconfig
+        run: aws eks update-kubeconfig --name innovation-lab --region ${{ env.AWS_REGION }}
+
+      - name: Deploy manifests
+        run: |
+          kubectl apply -f k8s/namespace.yaml
+          kubectl apply -f k8s/deployment-frontend.yaml
+          kubectl apply -f k8s/service-frontend.yaml
+          kubectl apply -f k8s/deployment-backend.yaml
+          kubectl apply -f k8s/service-backend.yaml
+          kubectl apply -f k8s/ingress.yaml
+
+      - name: Restart deployments to pick up new images
+        run: |
+          kubectl rollout restart deployment frontend -n david-musumba
+          kubectl rollout restart deployment backend -n david-musumba
+          kubectl rollout status deployment frontend -n david-musumba
+          kubectl rollout status deployment backend -n david-musumba
