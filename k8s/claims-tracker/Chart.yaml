@@ -1,0 +1,6 @@
+apiVersion: v2
+name: claims-tracker
+description: Helm chart for the Claims Tracker application (frontend + backend)
+type: application
+version: 0.1.0
+appVersion: "1.0"
